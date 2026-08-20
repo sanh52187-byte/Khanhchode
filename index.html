@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Cá Nhân</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --accent-color: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-main: #0f172a;
+            --text-sub: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        .profile-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 16px;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid transparent;
+            background: var(--accent-gradient) border-box;
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: #22c55e;
+            border: 3px solid #0f172a;
+            border-radius: 50%;
+        }
+
+        .user-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .user-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #a855f7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .user-bio {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* SKILLS BADGES */
+        .skills-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        /* SOCIAL LINKS */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid var(--card-border);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            background: var(--accent-gradient);
+            color: #fff;
+        }
+
+        /* ACTION BUTTON */
+        .btn-contact {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-contact:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <!-- Nút đổi giao diện Tối / Sáng -->
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- Ảnh Đại Diện -->
+        <div class="avatar-container">
+            <img src="https://picsum.photos/200" alt="Avatar">
+            <div class="status-badge" title="Đang hoạt động"></div>
+        </div>
+
+        <!-- Thông Tin Cá Nhân -->
+        <h1 class="user-name">Nguyễn Văn A</h1>
+        <p class="user-title">Fullstack Developer</p>
+        <p class="user-bio">
+            Đam mê lập trình web, thiết kế UI/UX và tối ưu trải nghiệm người dùng trên thiết bị di động.
+        </p>
+
+        <!-- Kỹ Năng / Thẻ Nổi Bật -->
+        <div class="skills-group">
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">ReactJS</span>
+            <span class="skill-tag">UI/UX Design</span>
+        </div>
+
+        <!-- Mạng Xã Hội -->
+        <div class="social-links">
+            <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="social-btn" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+
+        <!-- Nút Liên Hệ -->
+        <a href="tel:0865523664" class="btn-contact">
+            <i class="fa-solid fa-paper-plane"></i> LIÊN HỆ NGAY
+        </a>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('#themeBtn i');
+            
+            if (body.getAttribute('data-theme') === 'light') {
+                body.removeAttribute('data-theme');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fa-solid fa-sun';
+            }
+        }
+    </script>
+</body>
+</html>
